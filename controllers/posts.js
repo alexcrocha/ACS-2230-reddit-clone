@@ -14,4 +14,14 @@ module.exports = (app) => {
       console.log(error)
     }
   });
+
+  // LOOK UP THE POST
+  app.get('/posts/:id', async (req, res) => {
+    try {
+      const post = await Post.findById(req.params.id).lean();
+      res.render('posts-show', { post })
+    } catch (error) {
+      console.log(error)
+    }
+  });
 };
