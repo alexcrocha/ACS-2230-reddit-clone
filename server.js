@@ -33,3 +33,5 @@ app.get('/posts/new', (req, res) => {
 app.listen(3000, () => {
   console.log("Server started on http://localhost:3000");
 });
+
+module.exports = app;
