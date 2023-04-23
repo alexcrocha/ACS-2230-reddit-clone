@@ -6,6 +6,8 @@ const app = express();
 const connectDB = require('./data/reddit-db');
 connectDB();
 
+const Post = require('./models/post');
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
@@ -13,11 +15,16 @@ app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', './views');
 
-require('./controllers/posts')(app);
-
-app.get('/', (req, res) => {
-  res.render('home');
+app.get('/', async (req, res) => {
+  try {
+    const posts = await Post.find({}).lean();
+    return res.render('posts-index', { posts });
+  } catch (err) {
+    console.log(err.message);
+  }
 });
+
+require('./controllers/posts')(app);
 
 app.get('/posts/new', (req, res) => {
   res.render('posts-new');
