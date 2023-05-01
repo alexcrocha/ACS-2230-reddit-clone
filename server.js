@@ -24,11 +24,11 @@ app.get('/', async (req, res) => {
   }
 });
 
-require('./controllers/posts')(app);
-
 app.get('/posts/new', (req, res) => {
   res.render('posts-new');
 })
+
+require('./controllers/posts')(app);
 
 app.listen(3000, () => {
   console.log("Server started on http://localhost:3000");
