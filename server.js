@@ -30,6 +30,9 @@ app.get('/posts/new', (req, res) => {
 
 require('./controllers/posts')(app);
 
+
+require('./controllers/comments.js')(app);
+
 app.listen(3000, () => {
   console.log("Server started on http://localhost:3000");
 });
