@@ -1,7 +1,11 @@
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const { engine } = require('express-handlebars');
+require('dotenv').config();
 
 const app = express();
+
+app.use(cookieParser());
 
 const connectDB = require('./data/reddit-db');
 connectDB();
@@ -29,9 +33,8 @@ app.get('/posts/new', (req, res) => {
 })
 
 require('./controllers/posts')(app);
-
-
 require('./controllers/comments.js')(app);
+require('./controllers/auth.js')(app);
 
 app.listen(3000, () => {
   console.log("Server started on http://localhost:3000");
