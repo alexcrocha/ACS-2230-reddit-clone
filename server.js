@@ -1,37 +1,37 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
-const { engine } = require('express-handlebars');
+const checkAuth = require('./middleware/checkAuth');
+// const { engine } = require('express-handlebars');
+const exphbs = require('express-handlebars');
 require('dotenv').config();
 
 const app = express();
+
+const hbs = exphbs.create({
+  helpers: {
+    allowIdProperty: function (obj) {
+      return obj["_id"];
+    },
+  },
+});
 
 app.use(cookieParser());
 
 const connectDB = require('./data/reddit-db');
 connectDB();
 
-const Post = require('./models/post');
+// const Post = require('./models/post');
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.engine('handlebars', engine());
+app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 app.set('views', './views');
 
-app.get('/', async (req, res) => {
-  try {
-    const posts = await Post.find({}).lean();
-    return res.render('posts-index', { posts });
-  } catch (err) {
-    console.log(err.message);
-  }
-});
 
-app.get('/posts/new', (req, res) => {
-  res.render('posts-new');
-})
 
+app.use(checkAuth);
 require('./controllers/posts')(app);
 require('./controllers/comments.js')(app);
 require('./controllers/auth.js')(app);
