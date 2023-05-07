@@ -7,6 +7,8 @@ require('dotenv').config();
 
 const app = express();
 
+app.use(express.static('public'));
+
 const hbs = exphbs.create({
   helpers: {
     allowIdProperty: function (obj) {
@@ -35,6 +37,7 @@ app.use(checkAuth);
 require('./controllers/posts')(app);
 require('./controllers/comments.js')(app);
 require('./controllers/auth.js')(app);
+require('./controllers/replies.js')(app);
 
 app.listen(3000, () => {
   console.log("Server started on http://localhost:3000");
