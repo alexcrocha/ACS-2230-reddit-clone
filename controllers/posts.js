@@ -7,7 +7,7 @@ module.exports = (app) => {
     const currentUser = req.user;
 
     try {
-      const posts = await Post.find({}).lean().populate('author');
+      const posts = await Post.find({}).lean();
 
       const mappedPosts = posts.map((post) => {
         console.log(post)
@@ -54,11 +54,11 @@ module.exports = (app) => {
     }
   });
 
-  // LOOK UP THE POST
+  // SHOW
   app.get('/posts/:id', async (req, res) => {
     try {
       const currentUser = req.user;
-      const post = await Post.findById(req.params.id).lean().populate({ path: 'comments', populate: { path: 'author' } }).populate('author');
+      const post = await Post.findById(req.params.id).lean();
       res.render('posts-show', { post, currentUser });
     } catch (err) {
       console.log(err.message);
@@ -70,7 +70,7 @@ module.exports = (app) => {
     try {
       const currentUser = req.user;
       const { subreddit } = req.params;
-      const posts = await Post.find({ subreddit }).lean().populate('author');
+      const posts = await Post.find({ subreddit }).lean();
       res.render('posts-index', { posts, currentUser });
     } catch (err) {
       console.log(err);
