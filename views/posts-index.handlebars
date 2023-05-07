@@ -11,6 +11,17 @@
           <div class="text-right">
             <a href="/n/{{this.subreddit}}">{{this.subreddit}}</a>
           </div>
+          <form class="vote-up" data-id="{{this._id}}">
+            <button type="submit">&uarr;</button>
+          </form>
+          {{#if this.voteScore}}
+            {{this.voteScore}}
+          {{else}}
+            Vote
+          {{/if}}
+          <form class="vote-down" data-id="{{this._id}}">
+            <button type="submit">&darr;</button>
+          </form>
         </li>
       {{/each}}
     </ul>

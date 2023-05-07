@@ -17,6 +17,7 @@ module.exports = (app) => {
           url: post.url,
           author: post.author,
           subreddit: post.subreddit,
+          voteScore: post.voteScore,
         };
       });
 
@@ -38,6 +39,9 @@ module.exports = (app) => {
         const userId = req.user._id;
         const post = new Post(req.body);
         post.author = userId;
+        post.upVotes = [];
+        post.downVotes = [];
+        post.voteScore = 0;
         // SAVE INSTANCE OF POST MODEL TO DB AND REDIRECT TO THE ROOT
         await post.save();
         const user = await User.findById(userId);
@@ -72,6 +76,32 @@ module.exports = (app) => {
       const { subreddit } = req.params;
       const posts = await Post.find({ subreddit }).lean();
       res.render('posts-index', { posts, currentUser });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+
+  app.put('/posts/:id/vote-up', async (req, res) => {
+    try {
+      const post = await Post.findById(req.params.id);
+      post.upVotes.push(req.user._id);
+      post.voteScore += 1;
+      await post.save();
+
+      res.status(200).json({ success: 'Voted up!' });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+
+  app.put('/posts/:id/vote-down', async (req, res) => {
+    try {
+      const post = await Post.findById(req.params.id);
+      post.downVotes.push(req.user._id);
+      post.voteScore -= 1;
+      await post.save();
+
+      res.status(200).json({ success: 'Voted down!' });
     } catch (err) {
       console.log(err);
     }
