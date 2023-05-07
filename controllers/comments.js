@@ -1,22 +1,36 @@
 const Post = require('../models/post');
+const User = require('../models/user');
 const Comment = require('../models/comment');
+const user = require('../models/user');
 
 module.exports = (app) => {
   // CREATE Comment
   app.post('/posts/:postId/comments', async (req, res) => {
-    try {
-      // INSTANTIATE INSTANCE OF MODEL
-      const comment = new Comment(req.body);
-      // SAVE INSTANCE OF Comment MODEL TO DB
-      await comment.save();
+    if (req.user) {
+      try {
+        const userId = req.user._id;
 
-      const post = await Post.findById(req.params.postId);
-      post.comments.unshift(comment);
-      await post.save();
+        // INSTANTIATE INSTANCE OF MODEL
+        const comment = new Comment(req.body);
+        comment.author = userId;
+        // SAVE INSTANCE OF Comment MODEL TO DB
+        await comment.save();
 
-      res.redirect('/');
-    } catch (err) {
-      console.log(err);
+        const user = await User.findById(userId);
+        user.comments.unshift(comment);
+        await user.save();
+
+        const post = await Post.findById(req.params.postId);
+        post.comments.unshift(comment);
+        await post.save();
+
+        res.redirect(`/posts/${req.params.postId}`);
+      } catch (err) {
+        console.log(err.message);
+        res.status(500);
+      }
+    } else {
+      return res.status(401); // UNAUTHORIZED
     }
   });
 };
