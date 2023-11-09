@@ -1,7 +1,8 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const checkAuth = require('./middleware/checkAuth');
-// const { engine } = require('express-handlebars');
+const sanitizeRequest = require('./middleware/sanitizeRequest');
+
 const exphbs = require('express-handlebars');
 require('dotenv').config();
 
@@ -32,7 +33,7 @@ app.set('view engine', 'handlebars');
 app.set('views', './views');
 
 
-
+app.use(sanitizeRequest);
 app.use(checkAuth);
 require('./controllers/posts')(app);
 require('./controllers/comments.js')(app);
