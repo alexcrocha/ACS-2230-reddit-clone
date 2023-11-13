@@ -17,6 +17,7 @@ module.exports = (app) => {
           url: post.url,
           author: post.author,
           subreddit: post.subreddit,
+          summary: post.summary,
           voteScore: post.voteScore,
         };
       });
