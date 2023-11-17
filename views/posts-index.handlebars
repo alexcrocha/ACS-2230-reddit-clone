@@ -1,4 +1,8 @@
 <div class="posts-index">
+  <h1 class="subreddit">{{#if subreddit}}{{subreddit}}
+    {{else}}All
+    {{/if}}
+  </h1>
   <ul>
     {{#each posts}}
       <li class="posts-index-item">

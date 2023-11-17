@@ -76,7 +76,7 @@ module.exports = (app) => {
       const currentUser = req.user;
       const { subreddit } = req.params;
       const posts = await Post.find({ subreddit }).lean();
-      res.render('posts-index', { posts, currentUser });
+      res.render('posts-index', { posts, currentUser, subreddit });
     } catch (err) {
       console.log(err);
     }

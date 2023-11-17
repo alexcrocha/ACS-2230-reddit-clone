@@ -1,4 +1,5 @@
 <div class="posts-show">
+  <a href="/n/{{post.subreddit}}" class="subreddit">{{post.subreddit}}</a>
   <a href="{{post.url}}" class="lead">{{post.title}}</a>
   <p>{{post.author.username}}</p>
   <p>{{post.summary}}</p>
@@ -7,7 +8,7 @@
       <textarea class='form-control' name="content" placeholder="Comment"></textarea>
     </div>
     <div class="float-right">
-      <button type="submit" class="btn btn-primary">Post</button>
+      <button type="submit" class="btn btn-success-inverse">Post</button>
     </div>
   </form>
   {{>post-comments post=post}}
