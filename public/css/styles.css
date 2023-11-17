@@ -37,6 +37,11 @@ a {
   }
 }
 
+p {
+  margin-top: 20px;
+  font-size: 1rem;
+}
+
 ul {
   list-style: none;
 }
@@ -339,7 +344,6 @@ label {
   }
 }
 
-
 .reply {
   & .post-comment-author {
     margin-top: 0;
@@ -351,7 +355,3 @@ label {
   }
 }
 
-p {
-  margin-top: 20px;
-  font-size: 1rem;
-}
