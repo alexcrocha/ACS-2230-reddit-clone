@@ -1,4 +1,6 @@
 <div class="reply">
+  <a href="/n/{{post.subreddit}}" class="subreddit">{{post.subreddit}}</a>
+  <a href="/posts/{{post._id}}" class="lead">{{post.title}}</a>
   <p>{{comment.content}}</p>
   <p class="post-comment-author">{{comment.author.username}}</p>
   <form action="/posts/{{post._id}}/comments/{{comment._id}}/replies" method="post">

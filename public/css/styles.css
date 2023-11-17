@@ -349,7 +349,7 @@ label {
     margin-top: 0;
   }
 
-  & a {
+  & .float-right a {
     padding: 8px 15.5px;
     font-family: Arial;
   }
