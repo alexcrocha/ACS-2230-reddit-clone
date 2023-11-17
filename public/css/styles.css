@@ -45,6 +45,10 @@ ul {
   margin: 20px 0 0 40px;
   border-left: 1px solid var(--main-border-color);
   padding: 10px 0 10px 10px;
+
+  &:hover {
+    border-left-color: var(--info-color);
+  }
   & p {
     margin: 0;
   }
@@ -172,7 +176,7 @@ label {
   }
 }
 
-.text-right {
+.float-right {
   text-align: right;
 }
 
@@ -244,8 +248,13 @@ label {
   background-color: var(--danger-color);
 }
 
-.posts-index-author {
+.posts-index-content {
+  flex: 1;
+}
+
+.posts-index-author, .post-comment-author {
   margin-left: 10px;
+  float: right;
 
   &::before {
     content: 'by ';
@@ -261,4 +270,27 @@ label {
   border: 1px solid var(--main-border-color);
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0,0,0,.1);
+}
+
+.posts-show {
+  max-width: 70%;
+  min-width: 480px;
+  margin: 0 auto;
+
+  & p {
+    margin-bottom: 20px;
+  }
+
+  & .form-group {
+    margin-bottom: 10px;
+  }
+
+  & .form-control {
+    height: 120px;
+  }
+}
+
+p {
+  margin-top: 20px;
+  font-size: 1rem;
 }
